@@ -1,0 +1,32 @@
+body{
+    background-color: #16213E;
+}
+.workSpace{
+    width: 50%;
+    margin: 5rem auto;
+    border: 2px dashed #fff;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+h1{
+    text-align: center;
+    color: #fff;
+}
+input, button{
+    display: block;
+    margin: 1rem auto;
+    padding: 1rem 1.5rem;
+    outline: none;
+    font-size: larger;
+}
+#show-btn{
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+#result{
+    color: #fff;
+    font-size: 1.5rem;
+}

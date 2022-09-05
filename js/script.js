@@ -57,10 +57,103 @@ function checkPalindromeForAllDateFormats(date){
     return flag;
 }
 
-let date ={
-    day: 5,
-    month: 11,
-    year: 2020
-};
+function isLeapYear(year) {
+    if(year % 400 === 0) {
+        return true;
+    }
+    if(year % 100 === 0) {
+        return false;
+    }
+    if(year % 4 === 0) {
+        return true;
+    }
+    return false;
+} 
 
-console.log(checkPalindromeForAllDateFormats(date));
+function getNextDate(date) {
+    var day = date.day + 1;
+    var month = date.month;
+    var year = date.year;
+
+    var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    if(month === 2) {
+        if(isLeapYear(year)) {
+            if(day > 29) {
+                day = 1;
+                month++;
+            }
+        }
+        else {
+            if(day > 28) {
+                day = 1;
+                month++;
+            }
+        }
+    }
+    else{
+        if(day > daysInMonth[month - 1]) {
+            day = 1;
+            month++;
+        }
+    }
+
+    if(month > 12){
+        month = 1;
+        year++;
+    }
+
+    return {
+        day: day,
+        month: month,
+        year: year
+    };
+}
+
+function getNextPalindromeDate(date) {
+    var ctr = 0;
+    var nextDate = getNextDate(date);
+
+    while(1){
+        ctr++;
+        var isPalindrome = checkPalindromeForAllDateFormats(nextDate);
+        if(isPalindrome){
+            break;
+        }
+        nextDate = getNextDate(nextDate);
+    }
+
+    return [ctr, nextDate];
+}
+
+
+const dateInputRef = document.querySelector("#bday-input");
+const showBtnRef = document.querySelector("#show-btn");
+const resultRef = document.querySelector("#result");
+
+function clickHandler(e) {
+    let bdayStr = dateInputRef.value;
+
+    if(bdayStr !== '') {
+        let listOfDate = bdayStr.split('-');
+        let date = {
+            day: Number(listOfDate[2]),
+            month: Number(listOfDate[1]),
+            year: Number(listOfDate[0])
+        }
+
+        let isPalindrome = checkPalindromeForAllDateFormats(date);
+
+        if(isPalindrome){
+            resultRef.innerText = 'Yay! Your Birthday is Palindrome 🥳🥳'
+        }else {
+            let [ctr, nextDate] = getNextPalindromeDate(date);
+            resultRef.innerText = `The next Palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${ctr} days! 😞😞`
+        }
+    }   
+}
+
+showBtnRef.addEventListener('click', clickHandler);
+
+
+// console.log(getNextPalindromeDate(date));
